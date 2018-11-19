@@ -11,7 +11,7 @@ import (
 
 type Logger struct {
 	_log         *olog.Logger
-	level        LogLevel
+	Level        LogLevel
 	highlighting bool
 
 	dailyRolling bool
@@ -19,7 +19,8 @@ type Logger struct {
 	sizeRolling  int8
 	maxBackup    int8
 
-	fileName  string
+	Prefix    string
+	FileName  string
 	logSuffix string
 	fd        *os.File
 
@@ -36,11 +37,11 @@ func (l *Logger) SetFlags(flags int) {
 }
 
 func (l *Logger) SetLevel(level LogLevel) {
-	l.level = level
+	l.Level = level
 }
 
 func (l *Logger) SetLevelByString(level string) {
-	l.level = StringToLogLevel(level)
+	l.Level = StringToLogLevel(level)
 }
 
 func (l *Logger) SetRotateByDay() {
@@ -89,6 +90,7 @@ func (l *Logger) rotate() error {
 
 // SetPrefix sets the output prefix for the logger.
 func (l *Logger) SetPrefix(prefix string) {
+	l.Prefix = prefix
 	l._log.SetPrefix(prefix)
 }
 
@@ -96,13 +98,13 @@ func (l *Logger) doRotate(suffix string) error {
 	// Notice: Not check error, is this ok?
 	l.fd.Close()
 
-	lastFileName := l.fileName + "." + l.logSuffix
-	err := os.Rename(l.fileName, lastFileName)
+	lastFileName := l.FileName + "." + l.logSuffix
+	err := os.Rename(l.FileName, lastFileName)
 	if err != nil {
 		return err
 	}
 
-	err = l.SetOutputByName(l.fileName)
+	err = l.SetOutputByName(l.FileName)
 	if err != nil {
 		return err
 	}
@@ -124,14 +126,14 @@ func (l *Logger) SetOutputByName(path string) error {
 
 	l.SetOutput(f)
 
-	l.fileName = path
+	l.FileName = path
 	l.fd = f
 
 	return err
 }
 
 func (l *Logger) log(t LogType, v ...interface{}) {
-	if l.level|LogLevel(t) != l.level {
+	if l.Level|LogLevel(t) != l.Level {
 		return
 	}
 
@@ -158,7 +160,7 @@ func (l *Logger) log(t LogType, v ...interface{}) {
 }
 
 func (l *Logger) logf(t LogType, format string, v ...interface{}) {
-	if l.level|LogLevel(t) != l.level {
+	if l.Level|LogLevel(t) != l.Level {
 		return
 	}
 

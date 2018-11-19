@@ -52,7 +52,7 @@ func SetLevel(level LogLevel) {
 	_log.SetLevel(level)
 }
 func GetLogLevel() LogLevel {
-	return _log.level
+	return _log.Level
 }
 
 func SetOutput(out io.Writer) {
@@ -174,8 +174,9 @@ func New() *Logger {
 
 func Newlogger(w io.Writer, prefix string) *Logger {
 	return &Logger{
-		_log:  log.New(w, prefix, Ldate|Ltime|Lshortfile),
-		level: LOG_LEVEL_ALL,
-		depth: 4,
+		_log:   log.New(w, prefix, Ldate|Ltime|Lshortfile),
+		Level:  LOG_LEVEL_ALL,
+		depth:  4,
+		Prefix: prefix,
 	}
 }

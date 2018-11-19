@@ -103,7 +103,7 @@ func TestDayRotateCase(t *testing.T) {
 
 	err = _log.fd.Close()
 	if err != nil {
-		t.Errorf("close log fd fail - %s, %s\n", err.Error(), _log.fileName)
+		t.Errorf("close log fd fail - %s, %s\n", err.Error(), _log.FileName)
 	}
 
 	// check both old and new log file datas
@@ -169,7 +169,7 @@ func TestHourRotateCase(t *testing.T) {
 
 	err = _log.fd.Close()
 	if err != nil {
-		t.Errorf("close log fd fail - %s, %s\n", err.Error(), _log.fileName)
+		t.Errorf("close log fd fail - %s, %s\n", err.Error(), _log.FileName)
 	}
 
 	// check both old and new log file datas
