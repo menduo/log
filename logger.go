@@ -227,15 +227,15 @@ func (l *Logger) Infof(format string, v ...interface{}) {
 }
 
 func (l *Logger) Print(v ...interface{}) {
-	l.log(LOG_INFO, v...)
+	l.log(LOG_FATAL, v...)
 }
 
 func (l *Logger) Printf(format string, v ...interface{}) {
-	l.logf(LOG_INFO, format, v...)
+	l.logf(LOG_FATAL, format, v...)
 }
 
 func (l *Logger) Println(v ...interface{}) {
-	l.log(LOG_INFO, v...)
+	l.log(LOG_FATAL, v...)
 }
 
 func (l *Logger) Panic(v ...interface{}) {
