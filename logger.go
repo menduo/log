@@ -29,11 +29,14 @@ type Logger struct {
 }
 
 // Copy A logger, use its level, filename, prefix, depth, etc
-func (l *Logger) Copy() *Logger {
+func (l *Logger) Copy(resetDepth bool) *Logger {
 	nlg := Newlogger(os.Stderr, "")
 	nlg.SetLevel(l.Level)
 	nlg.SetPrefix(l.Prefix)
 	nlg.SetHighlighting(l.highlighting)
+	if resetDepth {
+		nlg.SetDepth(DeautltDepth)
+	}
 
 	if l.FileName != "" {
 		err := nlg.SetOutputByName(l.FileName)

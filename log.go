@@ -14,6 +14,7 @@ const (
 	Lshortfile    = log.Lshortfile
 	LstdFlags     = log.LstdFlags
 	Ltime         = log.Ltime
+	DeautltDepth  = 4
 )
 
 type (
@@ -176,12 +177,12 @@ func Newlogger(w io.Writer, prefix string) *Logger {
 	return &Logger{
 		_log:   log.New(w, prefix, Ldate|Ltime|Lshortfile),
 		Level:  LOG_LEVEL_ALL,
-		depth:  4,
+		depth:  DeautltDepth,
 		Prefix: prefix,
 	}
 }
 
 // Copy A logger
-func Copy(l *Logger) *Logger {
-	return _log.Copy()
+func Copy(l *Logger, resetDepth bool) *Logger {
+	return _log.Copy(resetDepth)
 }
