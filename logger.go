@@ -28,6 +28,31 @@ type Logger struct {
 	lock  sync.Mutex
 }
 
+// Copy A logger, use its level, filename, prefix, depth, etc
+func (l *Logger) Copy() *Logger {
+	nlg := Newlogger(os.Stderr, "")
+	nlg.SetLevel(l.Level)
+	nlg.SetPrefix(l.Prefix)
+	nlg.SetHighlighting(l.highlighting)
+
+	if l.FileName != "" {
+		err := nlg.SetOutputByName(l.FileName)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "error on SetOutputByName: %s", err.Error())
+		}
+	}
+
+	if l.dailyRolling {
+		nlg.SetRotateByDay()
+	}
+	if l.hourRolling {
+		nlg.SetRotateByHour()
+	}
+
+	nlg.SetDepth(l.depth)
+	return nlg
+}
+
 func (l *Logger) SetHighlighting(highlighting bool) {
 	l.highlighting = highlighting
 }

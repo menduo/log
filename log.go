@@ -180,3 +180,8 @@ func Newlogger(w io.Writer, prefix string) *Logger {
 		Prefix: prefix,
 	}
 }
+
+// Copy A logger
+func Copy(l *Logger) *Logger {
+	return _log.Copy()
+}
