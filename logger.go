@@ -52,7 +52,6 @@ func (l *Logger) Copy(resetDepth bool) *Logger {
 		nlg.SetRotateByHour()
 	}
 
-	nlg.SetDepth(l.depth)
 	return nlg
 }
 
