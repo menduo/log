@@ -240,15 +240,18 @@ func (l *Logger) Println(v ...interface{}) {
 
 func (l *Logger) Panic(v ...interface{}) {
 	l.log(LOG_FATAL, v...)
-	os.Exit(-1)
+	s := fmt.Sprint(v...)
+	panic(s)
 }
 
 func (l *Logger) Panicf(format string, v ...interface{}) {
 	l.logf(LOG_FATAL, format, v...)
-	os.Exit(-1)
+	s := fmt.Sprintf(format, v...)
+	panic(s)
 }
 
 func (l *Logger) Panicln(v ...interface{}) {
 	l.log(LOG_FATAL, v...)
-	os.Exit(-1)
+	s := fmt.Sprintln(v...)
+	panic(s)
 }
